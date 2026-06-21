@@ -1,3 +1,4 @@
+import os
 from flask import Flask, render_template, request, redirect, url_for, session, flash
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import text
@@ -6,8 +7,15 @@ app = Flask(__name__)
 app.secret_key = 'intranet_secret_key_database_course'
 
 # Configuración de conexión a tu SQL Server local
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://27qaKfVua6toKv1.root:TE1SiEJniW5GG0kf@gateway01.us-west-2.prod.aws.tidbcloud.com:4000/INTRANET'
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
+# ¡ESTO ES LO CLAVE! Forzamos a pymysql a usar transporte seguro (SSL)
+app.config['SQLALCHEMY_ENGINE_OPTIONS'] = {
+    "connect_args": {
+        "ssl": {}
+    }
+}
 
 db = SQLAlchemy(app)
 
