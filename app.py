@@ -207,7 +207,7 @@ def admin_horarios_cursos():
             INNER JOIN Curso_Programado CP 
                 ON PH.COD_CURSO_FK = CP.COD_CURSO_FK
                 AND PH.COD_SEC_FK = CP.COD_SEC_FK 
-                -- AND PH.ID_PERIODO_FK = CP.ID_PERIODO_FK (AGREGAR PERIODO EN HTML)
+                #AND PH.ID_PERIODO_FK = CP.ID_PERIODO_FK (AGREGAR PERIODO EN HTML)
             INNER JOIN Cursos C 
                 ON CP.COD_CURSO_FK = C.COD_CURSO
             LEFT JOIN Profesores P 
@@ -301,7 +301,7 @@ def admin_horario_profesor():
             INNER JOIN Cursos C ON CP.COD_CURSO_FK = C.COD_CURSO
             INNER JOIN Programacion_Horario PH ON CP.COD_CURSO_FK = PH.COD_CURSO_FK
                 AND CP.COD_SEC_FK = PH.COD_SEC_FK
-                -- AND CP.ID_PERIODO_FK = PH.ID_PERIODO_FK(MANEJADO CON PERIODOS-AGREGAR EN HTML)
+                #AND CP.ID_PERIODO_FK = PH.ID_PERIODO_FK(MANEJADO CON PERIODOS-AGREGAR EN HTML)
             WHERE CP.ID_PROFESOR_FK = '02C'
             AND CP.ID_PERIODO_FK = 2
             ORDER BY
