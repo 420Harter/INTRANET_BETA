@@ -1,4 +1,5 @@
 import os
+import ssl  # <--- ¡IMPORTANTE! Agrega esta importación aquí arriba
 from flask import Flask, render_template, request, redirect, url_for, session, flash
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import text
@@ -6,16 +7,14 @@ from sqlalchemy import text
 app = Flask(__name__)
 app.secret_key = 'intranet_secret_key_database_course'
 
-# Configuración de conexión a tu SQL Server local
+# Configuración de conexión a tu TiDB Cloud
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
-# ¡ESTO ES LO CLAVE! Forzamos a pymysql a usar transporte seguro (SSL)
+# Forzamos la encriptación segura usando el contexto nativo de Python
 app.config['SQLALCHEMY_ENGINE_OPTIONS'] = {
     "connect_args": {
-        "ssl": {
-            "fake_user_agent": "default" # Un truco para forzar la inicialización del diccionario de SSL en versiones antiguas de pymysql
-        }
+        "ssl": ssl.create_default_context()  # <--- Cambiamos `{}` por esto
     }
 }
 
