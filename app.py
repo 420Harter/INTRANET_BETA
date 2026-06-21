@@ -6,7 +6,7 @@ app = Flask(__name__)
 app.secret_key = 'intranet_secret_key_database_course'
 
 # Configuración de conexión a tu SQL Server local
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://27qaKfVua6toKv1.root:<PASSWORD>@gateway01.us-west-2.prod.aws.tidbcloud.com:4000/INTRANET'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://27qaKfVua6toKv1.root:<PASSWORD>@gateway01.us-west-2.prod.aws.tidbcloud.com:4000/INTRANET'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
