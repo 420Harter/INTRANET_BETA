@@ -13,7 +13,9 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 # ¡ESTO ES LO CLAVE! Forzamos a pymysql a usar transporte seguro (SSL)
 app.config['SQLALCHEMY_ENGINE_OPTIONS'] = {
     "connect_args": {
-        "ssl": {}
+        "ssl": {
+            "fake_user_agent": "default" # Un truco para forzar la inicialización del diccionario de SSL en versiones antiguas de pymysql
+        }
     }
 }
 
