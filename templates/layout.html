@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Intranet Académica - Base de Datos</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        body { background-color: #f4f6f9; }
+        .navbar-custom { background-color: #1e3d59; }
+        .navbar-custom .navbar-brand, .navbar-custom .nav-link { color: #ffffff; }
+        .navbar-custom .nav-link:hover { color: #ffc107; }
+        .card-header-custom { background-color: #17a2b8; color: white; }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-custom shadow-sm mb-4">
+        <div class="container">
+            <a class="navbar-brand" href="#"><i class="fa-solid fa-database me-2"></i>INTRANET DB</a>
+            <button class="navbar-expand" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    {% if session.get('tipo') == 'ALUMNO' %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url_for('alumno_dashboard') }}"><i class="fa-solid fa-user me-1"></i> Mi Perfil</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url_for('horario') }}"><i class="fa-solid fa-calendar-days me-1"></i> Mi Horario</a>
+                        </li>
+                    {% elif session.get('tipo') == 'ADMIN' %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url_for('admin_dashboard') }}"><i class="fa-solid fa-chart-line me-1"></i> Panel Admin</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url_for('admin_horarios_cursos') }}"><i class="fa-solid fa-clock me-1"></i> Horarios por Ciclo</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url_for('admin_alumnos_matriculados') }}"><i class="fa-solid fa-users me-1"></i> Alumnos Matriculados</a>
+                        </li>
+                    {% endif %}
+                </ul>
+                <span class="navbar-text text-white me-3 d-none d-lg-inline">
+                    <i class="fa-solid fa-circle-user me-1"></i> {{ session.get('nombre') }}
+                </span>
+                <a href="{{ url_for('logout') }}" class="btn btn-outline-light btn-sm"><i class="fa-solid fa-right-from-bracket"></i> Salir</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ 'danger' if category == 'error' else 'success' }} alert-dismissible fade show" role="alert">
+                        {{ message }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        {% block content %}{% endblock %}
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

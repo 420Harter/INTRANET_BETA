@@ -1,0 +1,62 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+<div class="card shadow-sm border-0 mb-4">
+    <div class="card-header bg-warning text-dark fw-bold">
+        <i class="fa-solid fa-search-user me-2"></i> Búsqueda de Carga Lectiva por Docente
+    </div>
+    <div class="card-body bg-white">
+        <form action="{{ url_for('admin_horario_profesor') }}" method="GET" class="row g-3">
+            <div class="col-md-9">
+                <label class="form-label small fw-bold text-secondary">Código del Profesor</label>
+                <input type="text" name="profesor" class="form-control" placeholder="Ej. P001 o el código exacto de la tabla Profesores" value="{{ prof_id or '' }}" required autocomplete="off">
+            </div>
+            <div class="col-md-3 d-flex align-items-end">
+                <button type="submit" class="btn btn-warning text-dark w-100 fw-bold"><i class="fa-solid fa-magnifying-glass me-2"></i>Consultar Carga</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+{% if prof_id %}
+<div class="card shadow-sm border-0">
+    <div class="card-header bg-dark text-white fw-bold">
+        <i class="fa-solid fa-calendar-day me-2"></i> Agenda Semanal del Docente
+    </div>
+    <div class="card-body p-0">
+        <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0 text-center">
+                <thead class="table-light">
+                    <tr>
+                        <th>Día</th>
+                        <th>Hora Inicio</th>
+                        <th>Hora Fin</th>
+                        <th class="text-start">Curso</th>
+                        <th>Sección</th>
+                        <th>Aula Asignada</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% if horarios %}
+                        {% for h in horarios %}
+                        <tr>
+                            <td class="fw-bold text-uppercase text-warning bg-light">{{ h.DIA_SEMANA }}</td>
+                            <td><span class="badge bg-light text-dark border">{{ h.HORA_INICIO }}</span></td>
+                            <td><span class="badge bg-light text-dark border">{{ h.HORA_FIN }}</span></td>
+                            <td class="text-start fw-semibold">{{ h.NOMBRE_CURSO }}</td>
+                            <td><span class="badge bg-info text-dark fw-bold">{{ h.SECCION }}</span></td>
+                            <td><span class="badge bg-dark text-white"><i class="fa-solid fa-door-open me-1"></i> {{ h.COD_AULA_FK }}</span></td>
+                        </tr>
+                        {% endfor %}
+                    {% else %}
+                        <tr>
+                            <td colspan="6" class="text-center p-4 text-muted">No se encontró programación horaria o el código del profesor es inválido.</td>
+                        </tr>
+                    {% endif %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endif %}
+{% endblock %}

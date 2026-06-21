@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Login - Intranet Universitaria</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            background: linear-gradient(135deg, #1e3d59 0%, #17a2b8 100%);
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .login-card {
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            width: 400px;
+        }
+        .login-icon {
+            font-size: 3rem;
+            color: #1e3d59;
+        }
+    </style>
+</head>
+<body>
+
+<div class="card login-card p-4 bg-white">
+    <div class="text-center mb-4">
+        <div class="login-icon mb-2"><i class="fa-solid fa-graduation-cap"></i></div>
+        <h4 class="fw-bold text-dark">Portal de Intranet</h4>
+        <small class="text-muted">Control de Estudios & Bases de Datos</small>
+    </div>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="alert alert-danger text-center p-2 small">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+
+    <form action="{{ url_for('login') }}" method="POST">
+        <div class="mb-3">
+            <label class="form-label text-secondary small fw-bold">Código o Usuario</label>
+            <div class="input-group">
+                <span class="input-group-text bg-light text-secondary"><i class="fa-solid fa-user"></i></span>
+                <input type="text" name="usuario" class="form-control" placeholder="Ej. A001" required autocomplete="off">
+            </div>
+        </div>
+        <div class="mb-4">
+            <label class="form-label text-secondary small fw-bold">Contraseña</label>
+            <div class="input-group">
+                <span class="input-group-text bg-light text-secondary"><i class="fa-solid fa-lock"></i></span>
+                <input type="password" name="contraseña" class="form-control" placeholder="••••••••" required>
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary w-100 py-2 fw-bold" style="background-color: #1e3d59; border: none;">
+            <i class="fa-solid fa-right-to-bracket me-2"></i>Ingresar Sistema
+        </button>
+    </form>
+</div>
+
+</body>
+</html>

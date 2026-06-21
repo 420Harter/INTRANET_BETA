@@ -1,0 +1,58 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-4 mb-4">
+        <div class="card shadow-sm border-0">
+            <div class="card-body text-center p-4">
+                <div class="bg-light d-inline-block rounded-circle p-3 mb-3 text-primary">
+                    <i class="fa-solid fa-id-card fa-3x"></i>
+                </div>
+                <h5 class="fw-bold mb-1">{{ nombre }}</h5>
+                <p class="text-muted mb-3">Código: <span class="badge bg-secondary">{{ cod_alu }}</span></p>
+                <span class="badge bg-success px-3 py-2 text-uppercase">Estudiante Activo</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-8">
+        <div class="card shadow-sm border-0">
+            <div class="card-header card-header-custom fw-bold d-flex align-items-center">
+                <i class="fa-solid fa-book-open me-2"></i> Asignaturas Matriculadas Vigentes
+            </div>
+            <div class="card-body p-0">
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle mb-0 text-center">
+                        <thead class="table-light">
+                            <tr>
+                                <th>Código</th>
+                                <th class="text-start">Nombre del Curso</th>
+                                <th>Sección</th>
+                                <th>Créditos</th>
+                                <th class="text-start">Docente</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% if cursos %}
+                                {% for curso in cursos %}
+                                <tr>
+                                    <td><span class="badge bg-light text-dark border">{{ curso.COD_CURSO }}</span></td>
+                                    <td class="text-start fw-semibold">{{ curso.NOMBRE_CURSO }}</td>
+                                    <td><span class="badge bg-info text-dark fw-bold">{{ curso.SECCION }}</span></td>
+                                    <td>{{ curso.CREDITOS }}</td>
+                                    <td class="text-start text-muted small"><i class="fa-solid fa-chalkboard-user me-1"></i> {{ curso.DOCENTE }}</td>
+                                </tr>
+                                {% endfor %}
+                            {% else %}
+                                <tr>
+                                    <td colspan="5" class="text-center p-4 text-muted">No se encontraron cursos registrados para este periodo.</td>
+                                </tr>
+                            {% endif %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

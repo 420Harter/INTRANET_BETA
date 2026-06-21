@@ -1,0 +1,44 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+<div class="card shadow-sm border-0">
+    <div class="card-header bg-success text-white fw-bold d-flex align-items-center justify-content-between">
+        <span><i class="fa-solid fa-clipboard-list me-2"></i> Reporte Consolidado de Alumnos Matriculados</span>
+        <span class="badge bg-light text-success fw-bold">Periodo ID: {{ periodo }}</span>
+    </div>
+    <div class="card-body p-0">
+        <div class="table-responsive">
+            <table class="table table-striped table-hover align-middle mb-0 text-center">
+                <thead class="table-light">
+                    <tr>
+                        <th>Código Alumno</th>
+                        <th class="text-start">Apellidos y Nombres</th>
+                        <th>Cód. Curso</th>
+                        <th class="text-start">Nombre del Curso</th>
+                        <th>Sección</th>
+                        <th>Créditos</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% if alumnos %}
+                        {% for alu in alumnos %}
+                        <tr>
+                            <td class="fw-bold text-secondary">{{ alu.COD_ALU }}</td>
+                            <td class="text-start fw-semibold">{{ alu.APELLIDO_PATERNO }} {{ alu.APELLIDO_MATERNO }}, {{ alu.NOMBRES }}</td>
+                            <td><span class="badge bg-light text-dark border">{{ alu.COD_CURSO }}</span></td>
+                            <td class="text-start">{{ alu.NOMBRE_CURSO }}</td>
+                            <td><span class="badge bg-info text-dark fw-bold">{{ alu.SECCION }}</span></td>
+                            <td>{{ alu.CREDITOS }}</td>
+                        </tr>
+                        {% endfor %}
+                    {% else %}
+                        <tr>
+                            <td colspan="6" class="text-center p-4 text-muted">No existen datos de matrículas registradas para este periodo académico.</td>
+                        </tr>
+                    {% endif %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

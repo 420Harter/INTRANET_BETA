@@ -1,0 +1,46 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+<div class="card shadow-sm border-0 mb-4">
+    <div class="card-header bg-dark text-white fw-bold d-flex align-items-center justify-content-between">
+        <span><i class="fa-solid fa-calendar-week me-2"></i> Cronograma de Horario Semanal</span>
+        <span class="badge bg-primary">Periodo Regular</span>
+    </div>
+    <div class="card-body p-0">
+        <div class="table-responsive">
+            <table class="table table-striped table-hover align-middle mb-0 text-center">
+                <thead class="table-light">
+                    <tr>
+                        <th>Día</th>
+                        <th>Hora Inicio</th>
+                        <th>Hora Fin</th>
+                        <th class="text-start">Curso / Asignatura</th>
+                        <th>Sección</th>
+                        <th>Aula</th>
+                        <th class="text-start">Docente Asignado</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% if horario %}
+                        {% for clase in horario %}
+                        <tr>
+                            <td class="fw-bold text-uppercase text-primary">{{ clase.DIA_SEMANA }}</td>
+                            <td><span class="badge bg-light text-dark border"><i class="fa-regular fa-clock text-success me-1"></i> {{ clase.HORA_INICIO }}</span></td>
+                            <td><span class="badge bg-light text-dark border"><i class="fa-regular fa-clock text-danger me-1"></i> {{ clase.HORA_FIN }}</span></td>
+                            <td class="text-start fw-semibold">{{ clase.NOMBRE_CURSO }} <small class="text-muted">({{ clase.COD_CURSO }})</small></td>
+                            <td><span class="badge bg-info text-dark">{{ clase.COD_SEC }}</span></td>
+                            <td><span class="badge bg-warning text-dark"><i class="fa-solid fa-door-open me-1"></i> {{ clase.COD_AULA_FK }}</span></td>
+                            <td class="text-start text-secondary small"><i class="fa-solid fa-user-tie me-1"></i> {{ clase.DOCENTE }}</td>
+                        </tr>
+                        {% endfor %}
+                    {% else %}
+                        <tr>
+                            <td colspan="7" class="text-center p-4 text-muted">No registras programaciones horarias para el periodo actual.</td>
+                        </tr>
+                    {% endif %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,53 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+<div class="row mb-4">
+    <div class="col-12">
+        <div class="p-5 bg-white rounded shadow-sm">
+            <h1 class="display-5 fw-bold text-dark"><i class="fa-solid fa-screwdriver-wrench me-3 text-primary"></i>Panel de Administración</h1>
+            <p class="col-md-8 fs-5 text-muted">Bienvenido al sistema de intranet, {{ nombre }}. Desde aquí puedes supervisar la distribución horaria por ciclo, listar alumnos matriculados y verificar las asignaciones de los docentes.</p>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-4 mb-4">
+        <div class="card h-100 shadow-sm border-0">
+            <div class="card-body p-4 d-flex flex-column justify-content-between">
+                <div>
+                    <div class="text-primary mb-3"><i class="fa-solid fa-business-time fa-2x"></i></div>
+                    <h5 class="fw-bold">Horarios por Ciclo</h5>
+                    <p class="text-muted small">Consulta la programación detallada de clases filtrando por el ciclo académico y la sección respectiva.</p>
+                </div>
+                <a href="{{ url_for('admin_horarios_cursos') }}" class="btn btn-outline-primary w-100 mt-3">Ir a Consultar</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4 mb-4">
+        <div class="card h-100 shadow-sm border-0">
+            <div class="card-body p-4 d-flex flex-column justify-content-between">
+                <div>
+                    <div class="text-success mb-3"><i class="fa-solid fa-graduation-cap fa-2x"></i></div>
+                    <h5 class="fw-bold">Alumnos Matriculados</h5>
+                    <p class="text-muted small">Genera la lista general de todos los estudiantes asignados a las distintas asignaturas y secciones activas.</p>
+                </div>
+                <a href="{{ url_for('admin_alumnos_matriculados') }}" class="btn btn-outline-success w-100 mt-3">Ver Alumnos</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4 mb-4">
+        <div class="card h-100 shadow-sm border-0">
+            <div class="card-body p-4 d-flex flex-column justify-content-between">
+                <div>
+                    <div class="text-warning mb-3"><i class="fa-solid fa-chalkboard-user fa-2x"></i></div>
+                    <h5 class="fw-bold">Horario de Docentes</h5>
+                    <p class="text-muted small">Ingresa el identificador de un profesor para auditar su carga de horas y aulas asignadas semanalmente.</p>
+                </div>
+                <a href="{{ url_for('admin_horario_profesor') }}" class="btn btn-outline-warning text-dark w-100 mt-3">Ver Carga Docente</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

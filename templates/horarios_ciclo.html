@@ -1,0 +1,71 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+<div class="card shadow-sm border-0 mb-4">
+    <div class="card-header bg-primary text-white fw-bold">
+        <i class="fa-solid fa-filter me-2"></i> Filtros de Búsqueda Académica
+    </div>
+    <div class="card-body bg-white">
+        <form action="{{ url_for('admin_horarios_cursos') }}" method="GET" class="row g-3">
+            <div class="col-md-5">
+                <label class="form-label small fw-bold text-secondary">Ciclo de Estudios</label>
+                <select name="ciclo" class="form-select" required>
+                    <option value="" disabled selected>Seleccione Ciclo...</option>
+                    {% for c in range(1, 11) %}
+                        <option value="{{ c }}" {% if ciclo|string == c|string %}selected{% endif %}>Ciclo {{ c }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col-md-5">
+                <label class="form-label small fw-bold text-secondary">Sección</label>
+                <input type="text" name="seccion" class="form-control" placeholder="Ej. A" value="{{ seccion or '' }}" required autocomplete="off">
+            </div>
+            <div class="col-md-2 d-flex align-items-end">
+                <button type="submit" class="btn btn-primary w-100"><i class="fa-solid fa-magnifying-glass me-2"></i>Buscar</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+{% if ciclo and seccion %}
+<div class="card shadow-sm border-0">
+    <div class="card-header card-header-custom fw-bold">
+        <i class="fa-solid fa-list-ol me-2"></i> Programación Horaria: Ciclo {{ ciclo }} - Sección "{{ seccion }}"
+    </div>
+    <div class="card-body p-0">
+        <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0 text-center">
+                <thead class="table-light">
+                    <tr>
+                        <th>Día</th>
+                        <th>Hora Inicio</th>
+                        <th>Hora Fin</th>
+                        <th class="text-start">Curso</th>
+                        <th>Aula</th>
+                        <th class="text-start">Docente</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% if horarios %}
+                        {% for h in horarios %}
+                        <tr>
+                            <td class="fw-bold text-primary">{{ h.DIA_SEMANA }}</td>
+                            <td><span class="badge bg-light text-dark border">{{ h.HORA_INICIO }}</span></td>
+                            <td><span class="badge bg-light text-dark border">{{ h.HORA_FIN }}</span></td>
+                            <td class="text-start fw-semibold">{{ h.NOMBRE_CURSO }}</td>
+                            <td><span class="badge bg-warning text-dark">{{ h.COD_AULA_FK }}</span></td>
+                            <td class="text-start text-secondary"><i class="fa-solid fa-user-tie me-1"></i> {{ h.DOCENTE }}</td>
+                        </tr>
+                        {% endfor %}
+                    {% else %}
+                        <tr>
+                            <td colspan="6" class="text-center p-4 text-muted">No se encontraron registros para los criterios ingresados.</td>
+                        </tr>
+                    {% endif %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endif %}
+{% endblock %}
