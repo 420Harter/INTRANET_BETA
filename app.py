@@ -160,7 +160,7 @@ def obtener_cursos_matriculados(cod_alu):
             LEFT JOIN Profesores P ON CP.ID_PROFESOR_FK = P.ID_PROFESOR
             WHERE M.COD_ALU_FK = :cod_alu
               AND M.ID_PERIODO_FK = :periodo
-              --AND M.APLAZADO = 0 (FALTA CORREGIR EL NULL)
+              #AND M.APLAZADO = 0 (FALTA CORREGIR EL NULL)
             ORDER BY C.NOMBRE_CURSO
         """)
         
